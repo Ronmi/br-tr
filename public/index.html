@@ -2,12 +2,107 @@
 <html lang="zh-tw">
   <head>
     <meta charset="utf-8">
-    <!-- add your css file here -->
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
   </head>
   <body>
+    <div id="app">
+      <div class="header">
+	<div class="logo"><span>Patrolavia</span></div>
+	<div class="search">
+	  <span>
+	    <label for="search">Search</label>
+	    <input id="search" />
+	  </span>
+	</div>
+	<div class="user">
+	  <img src="//www.gravatar.com/avatar/ed050764beb4cc337b2645c519d676fd?s=48" />
+	</div>
+      </div>
+
+      <div class="body">
+	<div class="projects">
+	  <div>
+	    <div class="box">
+	      <div class="proj">
+		<div class="name">Project</div>
+		<hr />
+		<div class="branches">
+		  <div class="branch">
+		    <span class="name">wwwwwwwww1wwwwwwwww2wwwwwwww3wwwwwwww4</span>
+		    <span class="owner">owner</span>	
+		    <span class="state">OK</span>
+		    <span class="desc">desc</span>
+		    <span class="state">OK</span>
+		  </div>
+		  <div class="branch mine">
+		    <span class="name">branch</span>
+		    <span class="owner">owner</span>
+		    <span class="state">NO</span>
+		    <span class="desc">desc</span>
+		    <span class="state">NO</span>
+		  </div>
+		  <div class="branch">
+		    <span class="name">branch</span>
+		    <span class="owner">owner</span>
+		    <span class="state">...</span>
+		    <span class="desc">desc</span>
+		    <span class="state">...</span>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  <div>
+	    <div class="box">
+	      <div class="proj mine">
+		<div class="name">Project</div>
+		<hr />
+		<div class="branches">
+		  <div class="branch">
+		    <span class="name">wwwwwwwww1wwwwwwwww2wwwwwwww3wwwwwwww4</span>
+		    <input class="owner" placeholder="owner,owner" />
+		    <span class="state">OK</span>
+		    <input class="desc" placeholder="description" />
+		    <span class="state">OK</span>
+		  </div>
+		  <div class="branch">
+		    <span class="name">branch</span>
+		    <input class="owner" />
+		    <span class="state">NO</span>
+		    <input class="desc" />
+		    <span class="state">NO</span>
+		  </div>
+		  <div class="branch">
+		    <span class="name">branch</span>
+		    <input class="owner" />
+		    <span class="state">...</span>
+		    <input class="desc" />
+		    <span class="state">...</span>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	    <div class="box">
+	      <div class="proj">
+		<div class="name">Project</div>
+	      </div>
+	    </div>
+	    <div class="box">
+	      <div class="proj">
+		<div class="name">Project</div>
+	      </div>
+	    </div>
+	</div>
+      </div>
+    </div>
+    
+    <!--
     <div id="app">
     </div>
     <script src="js/vendor.js"></script>
     <script src="js/bundle.js"></script>
+    -->
   </body>
 </html>
