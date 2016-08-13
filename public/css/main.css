@@ -33,23 +33,16 @@ body {
 }
 
 .search>span {
+}
+
+.search input { 
     display: inline-block;
     border: 1px solid #8c9eff;
     border-radius: 3px;
     background-color: #8c9eff;
-}
-
-.search label {
-    display: inline-block;
-    padding: 0 3px;
-    padding-left: 7px;
-    color: white;
-}
-
-.search input {
+    padding: 0 5px;
     width: 600px;
-    border: 0;
-    background-color: #8c9eff;
+    color: white;
 }
 
 .user {
@@ -69,14 +62,6 @@ body {
 .body {
     width: calc(100% - 40px);
     padding-left: 2em;
-}
-
-.body input {
-    padding: 0px 2px;
-    border-radius: 2px;
-    border: 0px;
-    border-bottom: 1px solid #8c9eff;
-    background-color: white;
 }
 
 .mine>.name {
@@ -132,6 +117,14 @@ body {
     width: 26em;
 }
 
+.branch input {
+    margin: 0;
+    padding: 0;
+    border: 0px;
+    border-bottom: 1px solid #8c9eff;
+    background-color: white;
+}
+
 .branch .owner {
     display: inline-block;
     margin-left: 10px;
@@ -151,4 +144,16 @@ body {
     height: inherit;
     vertical-align: middle;
     text-align: center;
+}
+
+.ok {
+    color: #3ba13b;
+}
+
+.fail {
+    color: #cf0a0a;
+}
+
+.pending {
+    color: #878787;
 }
