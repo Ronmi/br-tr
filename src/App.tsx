@@ -1,31 +1,77 @@
 import * as React from "react";
+import { Project as P } from "./types";
 import Project from "./Project";
 
-export default class App extends React.Component<{}, {}> {
-    render() {
-        let props = {
-            descChanged: (repo: string, desc: string) => {
-                return new Promise<void>((s, j) => {
-                    setTimeout(s, 3000);
-                });
-            },
-            ownerChanged: (repo: string, owner: string) => {
-                return new Promise<void>((s, j) => {
-                    setTimeout(s, 3000);
-                });
-            },
-            project: {
-                name: "test/repo",
-                branches: [
-                    { name: "b1", owner: "o1", desc: "d1" },
-                    { name: "b2", owner: "", desc: "d2" },
-                    { name: "b3", owner: "o3", desc: "" },
-                    { name: "b0", owner: "o0", desc: "d0" },
-                ],
-            },
+export interface Props {
+}
+
+export interface State {
+    projects?: P[];
+}
+
+export default class App extends React.Component<Props, State> {
+    constructor(props?: Props, context?: any) {
+        super(props, context);
+
+        this.state = {
+            projects: [
+                {
+                    name: "Ronmi/react-toy-router",
+                    branches: [
+                        { name: "main", owner: "ronmi", desc: "stable" },
+                        { name: "dev", owner: "ronmi", desc: "develop" },
+                    ],
+                },
+                {
+                    name: "Ronmi/react-promise-visualizer",
+                    branches: [
+                        { name: "main", owner: "ronmi", desc: "stable" },
+                        { name: "dev", owner: "ronmi", desc: "develop" },
+                        { name: "exp", owner: "fraina", desc: "experimental" },
+                    ],
+                },
+                {
+                    name: "Ronmi/some-go-project",
+                    branches: [
+                        { name: "main", owner: "ronmi", desc: "stable" },
+                        { name: "dev", owner: "ronmi", desc: "develop" },
+                    ],
+                },
+            ],
         };
+    }
+    handleDescUpdate: (r: string, d: string) => Promise<void> = (repo: string, desc: string) => {
+        return new Promise<void>((s, j) => {
+            setTimeout(s, 3000);
+        });
+    };
+    handleOwnerUpdate: (r: string, o: string) => Promise<void> = (repo: string, owner: string) => {
+        return new Promise<void>((s, j) => {
+            setTimeout(s, 3000);
+
+        });
+    };
+
+    render() {
+        let nodes = this.state.projects.map((p) => {
+            return (
+                <Project
+                    ownerChanged={this.handleOwnerUpdate}
+                    descChanged={this.handleDescUpdate}
+                    project={p}
+                    key={p.name}
+                    />
+            );
+        });
+
         return (
-            <Project {...props} />
+            <div>
+                <div className="body">
+                    <div className="projects">
+                        {nodes}
+                    </div>
+                </div>
+            </div>
         );
     }
 }
