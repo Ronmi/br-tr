@@ -8,7 +8,8 @@ export interface Props {
 }
 
 export interface State {
-    val?: string;
+    value?: string;
+    className?: string;
 }
 
 export class DebouncedInput extends React.Component<Props, State> {
@@ -17,11 +18,17 @@ export class DebouncedInput extends React.Component<Props, State> {
     constructor(props?: Props, context?: any) {
 	super(props, context);
 
-	this.state = { val: this.props.value };
+	this.state = {
+	    value: this.props.value,
+	    className: this.props.className
+	};
     }
 
     componentWillReceiveProps(props: Props) {
-	this.setState({ val: this.props.value });
+	this.setState({
+	    value: props.value,
+	    className: props.className
+	});
     }
 
     onChange = (e: Event) => {
@@ -29,7 +36,7 @@ export class DebouncedInput extends React.Component<Props, State> {
 	let val = (e.target as HTMLInputElement).value;
 
 	setTimeout(() => { this.validate(id, val) }, this.props.debounce);
-	this.setState({ val: val });
+	this.setState({ value: val });
     };
 
     validate(id: number, val: string) {
@@ -41,6 +48,6 @@ export class DebouncedInput extends React.Component<Props, State> {
     }
 
     render() {
-	return <input className={this.props.className} onChange={this.onChange} value={this.state.val} />;
+	return <input {...this.state} onChange={this.onChange} />;
     }
 }
