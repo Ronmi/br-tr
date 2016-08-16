@@ -76,10 +76,8 @@ export default class App extends React.Component<Props, State> {
 		    keywordChanged={this.handleKeywordUpdate}
 		    name="Patrolavia"
 		    img="//www.gravatar.com/avatar/ed050764beb4cc337b2645c519d676fd?s=48" />
-                <div className="body">
-                    <div className="projects">
-                        {nodes}
-                    </div>
+                <div className="projects">
+                    {nodes}
                 </div>
             </div>
         );
