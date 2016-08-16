@@ -10,9 +10,10 @@ import { DebouncedInput } from "../src/DebouncedInput";
 const expect = chai.expect;
 
 describe("<DebouncedInput />", () => {
-    it("is an input", () => {
-	let wrapper = shallow(<DebouncedInput onChange={() => {}} debounce={100} />);
+    it("is an input, with css class of your choose", () => {
+	let wrapper = shallow(<DebouncedInput className="test" onChange={() => {}} debounce={100} />);
 	expect(wrapper.is("input")).to.be.true;
+	expect(wrapper.find("input").prop("className")).to.equal("test");
     });
     it("changes value of input when props.value changes", () => {
 	let wrapper = shallow(<DebouncedInput onChange={() => {}} debounce={100} value="test" />);

@@ -2,6 +2,7 @@ import * as React from "react";
 
 export interface Props {
     value?: string;
+    className?: string;
     onChange: (val: string) => void;
     debounce: number;
 }
@@ -40,6 +41,6 @@ export class DebouncedInput extends React.Component<Props, State> {
     }
 
     render() {
-	return <input onChange={this.onChange} value={this.state.val} />;
+	return <input className={this.props.className} onChange={this.onChange} value={this.state.val} />;
     }
 }
