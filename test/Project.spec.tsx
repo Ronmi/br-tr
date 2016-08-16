@@ -88,6 +88,22 @@ describe("<Project />", () => {
     it("removes .hidden from div.branches if it is expanded (toggoles by clicking on name)", () => {
 	let wrapper = shallow(<Project {...prop()} />);
 	wrapper.find(".proj > .name").simulate("click", {});
-	expect(wrapper.find("div.branches").hasClass(".hidden")).to.be.false;
+	expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
+    });
+
+    describe("exported methods", () => {
+	it("expands after calling expand()", () => {
+	    let wrapper = shallow(<Project {...prop()} />);
+	    (wrapper.instance() as Project).expand();
+	    wrapper.update();
+	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
+	});
+	it("collapses after calling collapse()", () => {
+	    let wrapper = shallow(<Project {...prop()} />);
+	    wrapper.find(".proj > .name").simulate("click", {});
+	    (wrapper.instance() as Project).collapse();
+	    wrapper.update();
+	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.true;
+	});
     });
 });

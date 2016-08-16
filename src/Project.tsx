@@ -66,6 +66,13 @@ export default class Project extends React.Component<Props, State> {
 	);
     }
 
+    expand() {
+	this.setState({ expanded: true });
+    }
+    collapse() {
+	this.setState({ expanded: false });
+    }
+
     private get chosen(): boolean {
 	if (!this.props.keyword) return false;
 	return this.props.project.name.indexOf(this.props.keyword) >= 0;
@@ -80,7 +87,7 @@ export default class Project extends React.Component<Props, State> {
 	if (!this.state.expanded) ret += " hidden";
 	return ret;
     }
-    
+
     render() {
 	return (
 	    <div className={this.className}>
