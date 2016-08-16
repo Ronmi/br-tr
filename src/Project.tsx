@@ -77,22 +77,40 @@ export default class Project extends React.Component<Props, State> {
         if (!this.props.keyword) return false;
         return this.props.project.name.indexOf(this.props.keyword) >= 0;
     }
-    private get className(): string {
-        let ret = "proj";
+    private rootClass(nodes: Branch[]): string {
+	let ret = "proj";
+	let show = true;
+	if (this.props.keyword && !this.chosen) {
+	    show = false;
+	    for (let i = 0; i < nodes.length; i++) {
+		if (nodes[i].props.chosen) {
+		    show = true;
+		    break;
+		}
+	    }
+	}
+	if (!show) ret += " hidden";
+	return ret;
+    }
+    private get nameClass(): string {
+        let ret = "name";
         if (this.chosen) ret += " mine";
         return ret;
     }
     private get branchesClass(): string {
-        let ret = "branches"
+        let ret = "branches";
         if (!this.state.expanded) ret += " hidden";
         return ret;
     }
 
     render() {
+	let nodes = this.renderBranches();
+	let children: Branch[] = [];
+	if (nodes !== null) children = nodes.props.children;
         return (
-            <div className={this.className}>
-                <div className="name" onClick={this.toggleExpand}>{this.props.project.name}</div>
-                {this.renderBranches()}
+            <div className={this.rootClass(children)}>
+                <div className={this.nameClass} onClick={this.toggleExpand}>{this.props.project.name}</div>
+                {nodes}
             </div>
         );
     }

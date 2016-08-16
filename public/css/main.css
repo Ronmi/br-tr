@@ -39,7 +39,7 @@ body {
 .search>span {
 }
 
-.search input { 
+.search input {
     display: inline-block;
     border: 1px solid #8c9eff;
     border-radius: 3px;
@@ -64,8 +64,8 @@ body {
     height: 48px;
 }
 
-.mine>.name {
-    color: #ff5722;
+.mine {
+    box-shadow: 0px 3px 8px rgba(148, 148, 148, 30);
 }
 
 .projects {
@@ -76,7 +76,7 @@ body {
 .proj {
     background-color: white;
     width: 69em;
-    padding: 10px 0px;
+    padding: 0;
     padding-bottom: 0;
     margin-top: 12px;
     margin-bottom: 5px;
@@ -91,15 +91,14 @@ body {
 }
 
 .proj>.name{
-    padding-bottom: 10px;
-    padding-left: 17px;
+    padding: 10px 17px;
     font-size: x-large;
     cursor: pointer;
     border-bottom: 1px solid #cccccc;
 }
 
 .branches {
-    padding: 20px 0;
+    padding: 7px 0;
 }
 
 .branch {
@@ -108,7 +107,7 @@ body {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    padding-bottom: 7px;
+    padding: 7px 20px;
 }
 
 .branch .name {

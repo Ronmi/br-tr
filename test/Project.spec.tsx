@@ -44,11 +44,11 @@ describe("<Project />", () => {
         expect(wrapper.is("div.proj")).to.be.true;
         expect(wrapper.hasClass("mine")).to.be.false;
     });
-    it("has .mine if keyword matches some part of repository name", () => {
+    it("adds .mine to .name if keyword matches some part of repository name", () => {
         let props = prop();
         props.keyword = "test";
         let wrapper = shallow(<Project {...props} />);
-        expect(wrapper.hasClass("mine")).to.be.true;
+        expect(wrapper.find(".name").hasClass("mine")).to.be.true;
     });
     it("has .mine on branches if keyword matches some part of branch name or description", () => {
         let props = prop();
