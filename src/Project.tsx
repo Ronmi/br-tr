@@ -49,7 +49,7 @@ export default class Project extends React.Component<Props, State> {
 
 	let nodes = brs.map((br) => {
 	    const k = this.props.keyword;
-	    const chosen = br.name.indexOf(k) >= 0 || br.desc.indexOf(k) >= 0;
+	    const chosen = this.props.keyword && (br.name.indexOf(k) >= 0 || br.desc.indexOf(k) >= 0);
 	    return <Branch
 		       ownerChanged={this.handleOwnerUpdate}
 		       descChanged={this.handleDescUpdate}

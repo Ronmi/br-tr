@@ -58,6 +58,14 @@ describe("<Project />", () => {
 	    return c.is("Branch") && c.prop("chosen");
 	})).to.have.length(4);
     });
+    it("does no searching if keyword is empty", () => {
+	let props = prop();
+	props.keyword = "";
+	let wrapper = shallow(<Project {...props} />);
+	expect(wrapper.find(".branches").findWhere((c) => {
+	    return c.is("Branch") && c.prop("chosen");
+	})).to.have.length(0);
+    });
     it("has a .name element for repository name", () => {
 	let wrapper = shallow(<Project {...prop("test/repo", [])} />);
 	expect(wrapper.find(".name")).to.have.length(1);
