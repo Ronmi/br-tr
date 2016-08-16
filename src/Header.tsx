@@ -8,6 +8,7 @@ export interface Props {
 }
 
 export interface State {
+    keyword?: string;
 }
 
 export default class Header extends React.Component<Props, State> {
@@ -15,11 +16,13 @@ export default class Header extends React.Component<Props, State> {
 	super(props, context);
 
 	this.state = {
+	    keyword: "",
 	};
     }
 
     handleKeywordUpdate: (k: string) => Promise<void> = (k: string) => {
 	return new Promise<void>((s, j) => {
+	    this.setState({ keyword: k });
 	    this.props.keywordChanged(k);
 	    s();
 	});
@@ -32,7 +35,7 @@ export default class Header extends React.Component<Props, State> {
 		    <span>{this.props.name}</span>
 		</div>
 		<div className="search">
-		    <DebouncedInput debounce={200} onChange={this.handleKeywordUpdate} />
+		    <DebouncedInput value={this.state.keyword} debounce={200} onChange={this.handleKeywordUpdate} />
 		</div>
 		<div className="user">
 		    <img src={this.props.img} />
