@@ -14,10 +14,14 @@ describe("<DebouncedInput />", () => {
 	let wrapper = shallow(<DebouncedInput className="test" onChange={() => {}} debounce={100} />);
 	expect(wrapper.is("input")).to.be.true;
 	expect(wrapper.find("input").prop("className")).to.equal("test");
+	wrapper.setProps({className: "test2"});
+	expect(wrapper.find("input").prop("className")).to.equal("test2");
     });
     it("changes value of input when props.value changes", () => {
 	let wrapper = shallow(<DebouncedInput onChange={() => {}} debounce={100} value="test" />);
 	expect(wrapper.find("input").prop("value")).to.equal("test");
+	wrapper.setProps({value: "test2"});
+	expect(wrapper.find("input").prop("value")).to.equal("test2");
     });
     it("changes value of input immediately after change event, regarding debounce settings", () => {
 	let wrapper = shallow(<DebouncedInput onChange={() => {}} debounce={100} value="test" />);
