@@ -10,8 +10,8 @@ import App from "../src/App";
 const expect = chai.expect;
 
 describe("<App />", () => {
-  it("is a Branch", () => {
+  it("is a Branches", () => {
     let wrapper = shallow(<App />);
-    expect(wrapper.is("Branch")).to.be.true;
+    expect(wrapper.is("Branches")).to.be.true;
   });
 });

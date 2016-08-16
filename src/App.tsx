@@ -1,25 +1,29 @@
 import * as React from "react";
-import Branch from "./Branch";
+import Branches from "./Branches";
 
 export default class App extends React.Component<{}, {}> {
     render() {
 	let props = {
-	    descChanged: (desc: string) => {
+	    descChanged: (repo: string, desc: string) => {
 		return new Promise<void>((s,j) => {
 		    setTimeout(s, 3000);
 		});
 	    },
-	    ownerChanged: (owner: string) => {
+	    ownerChanged: (repo: string, owner: string) => {
 		return new Promise<void>((s,j) => {
 		    setTimeout(s, 3000);
 		});
 	    },
-	    name: "branch_name",
-	    owner: "test_owner",
-	    desc: "test description",
+	    name: "test/repo",
+	    branches: [
+		{name: "b1", owner: "o1", desc: "d1"},
+		{name: "b2", owner: "o2", desc: ""},
+		{name: "b3", owner: "", desc: "d3"},
+		{name: "b0", owner: "o0", desc: "d0"},
+	    ],
 	};
 	return (
-	    <Branch {...props} />
+	    <Branches {...props} />
 	);
     }
 }
