@@ -35,7 +35,7 @@ export default class Header extends React.Component<Props, State> {
 		    <span>{this.props.name}</span>
 		</div>
 		<div className="search">
-		    <DebouncedInput value={this.state.keyword} debounce={200} onChange={this.handleKeywordUpdate} />
+		    <DebouncedInput placeholder="Search" value={this.state.keyword} debounce={200} onChange={this.handleKeywordUpdate} />
 		</div>
 		<div className="user">
 		    <img src={this.props.img} />
