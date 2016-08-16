@@ -11,35 +11,35 @@ const expect = chai.expect;
 
 function prop(): Props {
     return {
-	keywordChanged: sinon.spy(),
-	name: "test",
-	img: "test_image",
+        keywordChanged: sinon.spy(),
+        name: "test",
+        img: "test_image",
     };
 }
 
 describe("<Header />", () => {
 
     // some common tests
-    let wrapper = shallow(<Header {...prop()} />);
+    let wrapper = shallow(<Header {...prop() } />);
     it("is div.header", () => {
-	expect(wrapper.is("div.header")).to.be.true;
+        expect(wrapper.is("div.header")).to.be.true;
     });
     it("has a div.logo", () => {
-	expect(wrapper.find("div.logo")).to.have.length(1);
+        expect(wrapper.find("div.logo")).to.have.length(1);
     });
     it("shows your company name in div.logo > span", () => {
-	expect(wrapper.find("div.logo").text()).to.equal("test");
+        expect(wrapper.find("div.logo").text()).to.equal("test");
     });
     it("has a div.search", () => {
-	expect(wrapper.find("div.search")).to.have.length(1);
+        expect(wrapper.find("div.search")).to.have.length(1);
     });
     it("has a search bar (DebouncedInput) in div.search", () => {
-	expect(wrapper.find("div.search > DebouncedInput")).to.have.length(1);
+        expect(wrapper.find("div.search > DebouncedInput")).to.have.length(1);
     });
     it("has a div.user", () => {
-	expect(wrapper.find("div.user")).to.have.length(1);
+        expect(wrapper.find("div.user")).to.have.length(1);
     });
     it("shows an image in div.user", () => {
-	expect(wrapper.find("div.user > img").prop("src")).to.equal("test_image");
+        expect(wrapper.find("div.user > img").prop("src")).to.equal("test_image");
     });
 });

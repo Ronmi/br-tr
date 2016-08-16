@@ -16,7 +16,7 @@ export default class App extends React.Component<Props, State> {
         super(props, context);
 
         this.state = {
-	    keyword: "",
+            keyword: "",
             projects: [
                 {
                     name: "Ronmi/react-toy-router",
@@ -55,7 +55,7 @@ export default class App extends React.Component<Props, State> {
         });
     };
     handleKeywordUpdate: (k: string) => void = (k: string) => {
-	this.setState({ keyword: k });
+        this.setState({ keyword: k });
     };
 
     render() {
@@ -65,17 +65,17 @@ export default class App extends React.Component<Props, State> {
                     ownerChanged={this.handleOwnerUpdate}
                     descChanged={this.handleDescUpdate}
                     project={p}
-		    keyword={this.state.keyword}
+                    keyword={this.state.keyword}
                     key={p.name} />
             );
         });
 
         return (
             <div>
-		<Header
-		    keywordChanged={this.handleKeywordUpdate}
-		    name="Patrolavia"
-		    img="//www.gravatar.com/avatar/ed050764beb4cc337b2645c519d676fd?s=48" />
+                <Header
+                    keywordChanged={this.handleKeywordUpdate}
+                    name="Patrolavia"
+                    img="//www.gravatar.com/avatar/ed050764beb4cc337b2645c519d676fd?s=48" />
                 <div className="projects">
                     {nodes}
                 </div>

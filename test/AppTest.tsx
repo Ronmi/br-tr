@@ -12,15 +12,15 @@ const expect = chai.expect;
 describe("<App />", () => {
     let wrapper = shallow(<App />);
     it("is div", () => {
-	expect(wrapper.is("div")).to.be.true;
+        expect(wrapper.is("div")).to.be.true;
     });
     it("has a Header", () => {
-	expect(wrapper.find("Header")).to.have.length(1);
+        expect(wrapper.find("Header")).to.have.length(1);
     });
     it("has a div.projects", () => {
-	expect(wrapper.find("div.projects")).to.have.length(1);
+        expect(wrapper.find("div.projects")).to.have.length(1);
     });
     it("contains correct number of Project elements in div.projects", () => {
-	expect(wrapper.find("div.projects > Project")).to.have.length(3);
+        expect(wrapper.find("div.projects > Project")).to.have.length(3);
     });
 });
