@@ -42,6 +42,7 @@ module.exports = {
 	test: /\.js/,
 	loader: "babel-loader",
 	exclude: /node_modules/,
+	include: /node_modules\/react-promise-visualizer\/.*\.js/,
 	query: { presets: ['es2015'], },
       },
       {

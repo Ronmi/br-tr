@@ -47,6 +47,8 @@ module.exports = function(config) {
 	  // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
 	  { test: /\.tsx?$/, loader: "babel-loader?presets[]=es2015!ts-loader", exclude: /node_modules/ },
 
+	  // react-promise-visualizer is written in es6, need babel to convert it
+	  { test: /node_modules\/react-promise-visualizer\/.*\.js/, loader: "babel-loader?presets[]=es2015" },
 	  // https://github.com/airbnb/enzyme/issues/47
 	  { test: /\.json$/, loader: 'json' },
 	  {
