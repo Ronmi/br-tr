@@ -105,6 +105,7 @@ body {
 }
 
 .branch {
+    height: 2em;
     width: 63.7em;
     margin-top: 10px;
     margin-left: auto;
@@ -137,11 +138,21 @@ body {
     width: 20em;
 }
 
-.state {
+div.state {
     display: inline-block;
-    margin-left: 5px;
     width: 2em;
-    height: inherit;
+    height: 2em;
+    line-height: 2em;
+    vertical-align: middle;
+    text-align: center;
+}
+
+span.state {
+    display: inline-block;
+    margin: 0;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
     vertical-align: middle;
     text-align: center;
 }

@@ -48,7 +48,12 @@ module.exports = function(config) {
 	  { test: /\.tsx?$/, loader: "babel-loader?presets[]=es2015!ts-loader", exclude: /node_modules/ },
 
 	  // https://github.com/airbnb/enzyme/issues/47
-	  { test: /\.json$/, loader: 'json' }
+	  { test: /\.json$/, loader: 'json' },
+	  {
+	    test: /\.css$/,
+	    loader: "style-loader!css-loader?modules",
+	  },
+	  { test: /\.svg$/, loader: "url-loader" },
 	],
         preLoaders: [
           // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
