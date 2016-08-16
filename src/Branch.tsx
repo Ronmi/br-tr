@@ -17,7 +17,7 @@ export interface State {
 export default class Branch extends React.Component<Props, State> {
     private v_owner: Visualizer;
     private v_desc: Visualizer;
-    
+
     constructor(props?: Props, context?: any) {
 	super(props, context);
 
@@ -33,7 +33,7 @@ export default class Branch extends React.Component<Props, State> {
 	return ret;
     }
 
-    updateOwner = async (owner: string) => {
+    handleOwnerUpdate = async (owner: string) => {
 	let old = this.state.owner;
 	this.setState({ owner: owner });
 
@@ -43,7 +43,7 @@ export default class Branch extends React.Component<Props, State> {
 	    this.setState({ owner: old });
 	}
     };
-    updateDesc = async (desc: string) => {
+    handleDescUpdate = async (desc: string) => {
 	let old = this.state.desc;
 	this.setState({ desc: desc });
 
@@ -53,16 +53,16 @@ export default class Branch extends React.Component<Props, State> {
 	    this.setState({ desc: old });
 	}
     };
-    
+
     render() {
 	return (
 	    <div className={this.className}>
 		<span className="name">{this.props.name}</span>
-		<DebouncedInput className="owner" value={this.state.owner} onChange={this.updateOwner} debounce={500} />
+		<DebouncedInput className="owner" value={this.state.owner} onChange={this.handleOwnerUpdate} debounce={500} />
 		<div className="state">
 		    <Visualizer className="state" provider={new provider} ref={c => this.v_owner = c} />
 		</div>
-		<DebouncedInput className="desc" value={this.state.desc} onChange={this.updateDesc} debounce={500} />
+		<DebouncedInput className="desc" value={this.state.desc} onChange={this.handleDescUpdate} debounce={500} />
 		<div className="state">
 		    <Visualizer className="state" provider={new provider} ref={c => this.v_desc = c} />
 		</div>
