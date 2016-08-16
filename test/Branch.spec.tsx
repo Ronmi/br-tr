@@ -26,8 +26,7 @@ describe("<Branch />", () => {
     it("is a div.branch, without .mine", () => {
 	let wrapper = s();
 
-	expect(wrapper.is("div")).to.be.true;
-	expect(wrapper.hasClass("branch")).to.be.true;
+	expect(wrapper.is("div.branch")).to.be.true;
 	expect(wrapper.hasClass("mine")).to.be.false;
     });
     it("adds .mine if chosen", () => {
