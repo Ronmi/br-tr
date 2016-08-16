@@ -161,15 +161,3 @@ span.state {
     vertical-align: middle;
     text-align: center;
 }
-
-.ok {
-    color: #3ba13b;
-}
-
-.fail {
-    color: #cf0a0a;
-}
-
-.pending {
-    color: #878787;
-}
