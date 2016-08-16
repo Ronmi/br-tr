@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Project as P } from "./types";
+import Header from "./Header";
 import Project from "./Project";
 
 export interface Props {
@@ -7,6 +8,7 @@ export interface Props {
 
 export interface State {
     projects?: P[];
+    keyword?: string;
 }
 
 export default class App extends React.Component<Props, State> {
@@ -14,6 +16,7 @@ export default class App extends React.Component<Props, State> {
         super(props, context);
 
         this.state = {
+	    keyword: "",
             projects: [
                 {
                     name: "Ronmi/react-toy-router",
@@ -51,6 +54,9 @@ export default class App extends React.Component<Props, State> {
 
         });
     };
+    handleKeywordUpdate: (k: string) => void = (k: string) => {
+	this.setState({ keyword: k });
+    };
 
     render() {
         let nodes = this.state.projects.map((p) => {
@@ -59,13 +65,17 @@ export default class App extends React.Component<Props, State> {
                     ownerChanged={this.handleOwnerUpdate}
                     descChanged={this.handleDescUpdate}
                     project={p}
-                    key={p.name}
-                    />
+		    keyword={this.state.keyword}
+                    key={p.name} />
             );
         });
 
         return (
             <div>
+		<Header
+		    keywordChanged={this.handleKeywordUpdate}
+		    name="Patrolavia"
+		    img="//www.gravatar.com/avatar/ed050764beb4cc337b2645c519d676fd?s=48" />
                 <div className="body">
                     <div className="projects">
                         {nodes}
