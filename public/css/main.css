@@ -2,12 +2,16 @@ body {
     background-color: #eeeeee;
 }
 
+.hidden {
+    display: none;
+}
+
 .header {
     background-color: #455ede;
     width: 100%;
-    padding-top: 5px;
     height: 4.3em;
     display: table;
+    box-shadow: 0px 3px 8px rgba(148, 148, 148, 30);
 }
 
 .logo {
@@ -47,10 +51,11 @@ body {
 
 .user {
     width: 8%;
-    mix-width: 80px;
+    min-width: 80px;
     display: table-cell;
     vertical-align: middle;
     padding: 0px;
+    margin-top: 5px;
     text-align: center;
 }
 
@@ -73,35 +78,33 @@ body {
     width: 100%;
 }
 
-.box {
+.proj {
     background-color: white;
     width: 69em;
     padding: 10px 0px;
-    box-shadow: 2px 2px 5px 1px rgba(148, 148, 148, 30);
+    padding-bottom: 0;
     margin-top: 12px;
     margin-bottom: 5px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.proj {
-    padding: 0;
-    margin: 0;
-}
-
-.proj>hr {
-    border: 0;
-    border-top: 1px solid #cccccc;
+    box-shadow: 0px 3px 8px rgba(148, 148, 148, 30);
 }
 
 .proj>.name{
+    padding-bottom: 10px;
     padding-left: 17px;
     font-size: x-large;
     cursor: pointer;
+    border-bottom: 1px solid #cccccc;
 }
 
 .branches {
-    margin-top: 20px;
+    padding: 20px 0;
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
 }
 
 .branch {
