@@ -25,7 +25,7 @@ export class ByMock implements API {
         }
     }
 
-    updateOwner(repo: string, owner: string): Promise<void> {
+    updateOwner(repo: string, branch: string, owner: string): Promise<void> {
         return new Promise<void>((res, rej) => {
             if (this.shouldSuccess) {
                 res();
@@ -34,7 +34,7 @@ export class ByMock implements API {
             rej();
         });
     }
-    updateDesc(repo: string, desc: string): Promise<void> {
+    updateDesc(repo: string, branch: string, desc: string): Promise<void> {
         return new Promise<void>((res, rej) => {
             if (this.shouldSuccess) {
                 res();

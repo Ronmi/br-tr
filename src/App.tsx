@@ -43,12 +43,12 @@ export default class App extends React.Component<Props, State> {
             ],
         };
     }
-    handleDescUpdate: (r: string, d: string) => Promise<void> = (repo: string, desc: string) => {
+    handleDescUpdate: (r: string, b: string, d: string) => Promise<void> = (repo: string, br: string, desc: string) => {
         return new Promise<void>((s, j) => {
             setTimeout(s, 3000);
         });
     };
-    handleOwnerUpdate: (r: string, o: string) => Promise<void> = (repo: string, owner: string) => {
+    handleOwnerUpdate: (r: string, b: string, o: string) => Promise<void> = (repo: string, br: string, owner: string) => {
         return new Promise<void>((s, j) => {
             setTimeout(s, 3000);
 

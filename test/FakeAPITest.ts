@@ -12,22 +12,22 @@ describe("Mocked APIs", () => {
     it("should success for updateOwner if it.should.success", () => {
         let api = new ByMock;
         api.should.success;
-        expect(api.updateOwner("", "")).to.be.fulfilled;
+        expect(api.updateOwner("", "", "")).to.be.fulfilled;
     });
     it("should fail for updateOwner if it.should.fail", () => {
         let api = new ByMock;
         api.should.fail;
-        expect(api.updateOwner("", "")).to.be.rejected;
+        expect(api.updateOwner("", "", "")).to.be.rejected;
     });
     it("should success for updateDesc if it.should.success", () => {
         let api = new ByMock;
         api.should.success;
-        expect(api.updateDesc("", "")).to.be.fulfilled;
+        expect(api.updateDesc("", "", "")).to.be.fulfilled;
     });
     it("should fail for updateDesc if it.should.fail", () => {
         let api = new ByMock;
         api.should.fail;
-        expect(api.updateDesc("", "")).to.be.rejected;
+        expect(api.updateDesc("", "", "")).to.be.rejected;
     });
     it("calls all cb with correct changeset", () => {
         const c: ChangeSet = {

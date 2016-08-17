@@ -4,8 +4,8 @@ import { Branch as br } from "./types";
 import { DebouncedInput } from "./DebouncedInput";
 
 export interface Props extends br {
-    ownerChanged: (owner: string) => Promise<void>;
-    descChanged: (desc: string) => Promise<void>;
+    ownerChanged: (br: string, owner: string) => Promise<void>;
+    descChanged: (br: string, desc: string) => Promise<void>;
     chosen?: boolean;
 }
 
@@ -38,7 +38,7 @@ export default class Branch extends React.Component<Props, State> {
         this.setState({ owner: owner });
 
         try {
-            await this.v_owner.show(this.props.ownerChanged(owner));
+            await this.v_owner.show(this.props.ownerChanged(this.props.name, owner));
         } catch (e) {
             this.setState({ owner: old });
         }
@@ -48,7 +48,7 @@ export default class Branch extends React.Component<Props, State> {
         this.setState({ desc: desc });
 
         try {
-            await this.v_desc.show(this.props.descChanged(desc));
+            await this.v_desc.show(this.props.descChanged(this.props.name, desc));
         } catch (e) {
             this.setState({ desc: old });
         }

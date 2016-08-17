@@ -9,7 +9,7 @@ export interface ChangeSet {
 
 // onUpdate
 export interface API {
-    updateOwner(repo: string, owner: string): Promise<void>;
-    updateDesc(repo: string, desc: string): Promise<void>;
+    updateOwner(repo: string, branch: string, owner: string): Promise<void>;
+    updateDesc(repo: string, branch: string, desc: string): Promise<void>;
     onUpdate(cb: Callback): void;
 }

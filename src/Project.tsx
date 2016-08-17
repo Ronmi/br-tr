@@ -3,8 +3,8 @@ import { Project as proj, Branch as br } from "./types";
 import Branch from "./Branch";
 
 export interface Props {
-    ownerChanged: (repo: string, owner: string) => Promise<void>;
-    descChanged: (repo: string, desc: string) => Promise<void>;
+    ownerChanged: (repo: string, br: string, owner: string) => Promise<void>;
+    descChanged: (repo: string, br: string, desc: string) => Promise<void>;
     project: proj;
     keyword?: string;
 }
@@ -22,11 +22,11 @@ export default class Project extends React.Component<Props, State> {
         };
     }
 
-    handleOwnerUpdate: (o: string) => Promise<void> = (o: string) => {
-        return this.props.ownerChanged(this.props.project.name, o);
+    handleOwnerUpdate: (b: string, o: string) => Promise<void> = (b: string, o: string) => {
+        return this.props.ownerChanged(this.props.project.name, b, o);
     };
-    handleDescUpdate: (o: string) => Promise<void> = (o: string) => {
-        return this.props.descChanged(this.props.project.name, o);
+    handleDescUpdate: (b: string, o: string) => Promise<void> = (b:string, o: string) => {
+        return this.props.descChanged(this.props.project.name, b, o);
     };
     toggleExpand: () => void = () => {
         this.setState({ expanded: !this.state.expanded });
