@@ -2,13 +2,25 @@ import * as React from "react";
 import { Project as P } from "./types";
 import Header from "./Header";
 import Project from "./Project";
+import { API, ChangeSet } from "./API";
 
 export interface Props {
+    API: API;
 }
 
 export interface State {
-    projects?: P[];
+    projects?: { [name: string]: P };
     keyword?: string;
+}
+
+type Ps = { [name: string]: P };
+
+function dupe(ps: Ps): Ps {
+    let ret: Ps = {}
+    for (let n in ps) {
+	ret[n] = ps[n];
+    }
+    return ret;
 }
 
 export default class App extends React.Component<Props, State> {
@@ -17,40 +29,84 @@ export default class App extends React.Component<Props, State> {
 
         this.state = {
             keyword: "",
-            projects: [
-                {
-                    name: "Ronmi/react-toy-router",
-                    branches: [
-                        { name: "main", owner: "ronmi", desc: "stable" },
-                        { name: "dev", owner: "ronmi", desc: "develop" },
-                    ],
-                },
-                {
-                    name: "Ronmi/react-promise-visualizer",
-                    branches: [
-                        { name: "main", owner: "ronmi", desc: "stable" },
-                        { name: "dev", owner: "ronmi", desc: "develop" },
-                        { name: "exp", owner: "fraina", desc: "experimental" },
-                    ],
-                },
-                {
-                    name: "Ronmi/some-go-project",
-                    branches: [
-                        { name: "main", owner: "ronmi", desc: "stable" },
-                        { name: "dev", owner: "ronmi", desc: "develop" },
-                    ],
-                },
-            ],
+            projects: {},
         };
+
+	this.props.API.onUpdate(this.mergeChangeset);
     }
+    private mergeChangeset: (c: ChangeSet) => void = (c: ChangeSet) => {
+	let dest = dupe(this.state.projects);
+	
+	// remove deleted projects
+	if (c.deleted && c.deleted.length) {
+	    for (let i = 0; i < c.deleted.length; i++) {
+		const n: string = c.deleted[i];
+		delete dest[n];
+	    }
+	}
+
+	// update modified projects, including inserting it
+	if (c.modified && c.modified.length) {
+	    for (let i = 0; i < c.modified.length; i++) {
+		const p: P = c.modified[i];
+		dest[p.name] = p;
+	    }
+	}
+
+	this.setState({ projects: dest });
+    };
     handleDescUpdate: (r: string, b: string, d: string) => Promise<void> = (repo: string, br: string, desc: string) => {
         return new Promise<void>((s, j) => {
-            setTimeout(s, 3000);
+            setTimeout(() => {
+		let dest = dupe(this.state.projects);
+		if (!dest[repo]) {
+		    j();
+		    return;
+		}
+
+		let found = false;
+		for (let i = 0; i < dest[repo].branches.length; i++) {
+		    const b = dest[repo].branches[i];
+		    if (b.name == br) {
+			dest[repo].branches[i].desc = desc;
+			found = true;
+			break;
+		    }
+		}
+		if (!found) {
+		    j();
+		    return;
+		}
+		this.setState({ projects: dest });
+		s();
+	    }, 3000);
         });
     };
     handleOwnerUpdate: (r: string, b: string, o: string) => Promise<void> = (repo: string, br: string, owner: string) => {
         return new Promise<void>((s, j) => {
-            setTimeout(s, 3000);
+            setTimeout(() => {
+		let dest = dupe(this.state.projects);
+		if (!dest[repo]) {
+		    j();
+		    return;
+		}
+
+		let found = false;
+		for (let i = 0; i < dest[repo].branches.length; i++) {
+		    const b = dest[repo].branches[i];
+		    if (b.name == br) {
+			dest[repo].branches[i].owner = owner;
+			found = true;
+			break;
+		    }
+		}
+		if (!found) {
+		    j();
+		    return;
+		}
+		this.setState({ projects: dest });
+		s();
+	    }, 3000);
 
         });
     };
@@ -59,8 +115,10 @@ export default class App extends React.Component<Props, State> {
     };
 
     render() {
-        let nodes = this.state.projects.map((p) => {
-            return (
+        let nodes: JSX.Element[] = [];
+	for (let n in this.state.projects) {
+	    const p = this.state.projects[n];
+            nodes.push(
                 <Project
                     ownerChanged={this.handleOwnerUpdate}
                     descChanged={this.handleDescUpdate}
@@ -68,7 +126,7 @@ export default class App extends React.Component<Props, State> {
                     keyword={this.state.keyword}
                     key={p.name} />
             );
-        });
+	}
 
         return (
             <div>

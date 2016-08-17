@@ -6,11 +6,42 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import App from "../src/App";
+import { ByMock } from "./FakeAPI";
 
 const expect = chai.expect;
 
 describe("<App />", () => {
-    let wrapper = shallow(<App />);
+    let api = new ByMock();
+    
+    let wrapper = shallow(<App API={api} />);
+    api.update({
+	modified: [
+	    {
+		name: "Ronmi/react-toy-router",
+		branches: [
+		    { name: "main", owner: "ronmi", desc: "stable" },
+		    { name: "dev", owner: "ronmi", desc: "develop" },
+		],
+	    },
+	    {
+		name: "Ronmi/react-promise-visualizer",
+		branches: [
+		    { name: "main", owner: "ronmi", desc: "stable" },
+		    { name: "dev", owner: "ronmi", desc: "develop" },
+		    { name: "exp", owner: "fraina", desc: "experimental" },
+		],
+	    },
+	    {
+		name: "Ronmi/some-go-project",
+		branches: [
+		    { name: "main", owner: "ronmi", desc: "stable" },
+		    { name: "dev", owner: "ronmi", desc: "develop" },
+		],
+	    },
+	],
+    });
+    wrapper.update();
+
     it("is div", () => {
         expect(wrapper.is("div")).to.be.true;
     });

@@ -3,8 +3,8 @@ import { Project } from "./types";
 export type Callback = (changeset: ChangeSet) => void;
 
 export interface ChangeSet {
-    modified: Project[]; // including new projects
-    deleted: string[]; // only repo name
+    modified?: Project[]; // including new projects
+    deleted?: string[]; // only repo name
 }
 
 // onUpdate
