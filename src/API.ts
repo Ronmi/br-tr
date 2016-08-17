@@ -4,7 +4,7 @@ export type Callback = (changeset: ChangeSet) => void;
 
 export interface ChangeSet {
     modified: Project[]; // including new projects
-    deleted: Project[];
+    deleted: string[]; // only repo name
 }
 
 // onUpdate
