@@ -3,7 +3,25 @@ body {
 }
 
 .hidden {
-    display: none;
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.hidden * {
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
 }
 
 .header {
@@ -90,6 +108,10 @@ body {
     -o-transition: all 1s;
 }
 
+.proj.hidden {
+    display: none;
+}
+
 .proj>.name{
     padding: 10px 17px;
     font-size: x-large;
@@ -98,10 +120,20 @@ body {
 }
 
 .branches {
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
     padding: 7px 0;
 }
 
 .branch {
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
     height: 2em;
     width: 63.7em;
     margin-top: 10px;
