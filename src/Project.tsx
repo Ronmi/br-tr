@@ -20,6 +20,45 @@ export default class Project extends React.Component<Props, State> {
         this.state = {
             expanded: false,
         };
+
+	this.setupNodes(this.props);
+	this.state.expanded = this.shouldExpand(this.props);
+    }
+    private nodes: JSX.Element[] = [];
+
+    componentWillReceiveProps(props: Props) {
+	this.setupNodes(props);
+	this.setState({ expanded: this.shouldExpand(props) });
+    }
+
+    private setupNodes(props: Props) {
+        const p = props.project;
+	const kw = props.keyword;
+        if (p.branches.length === 0) {
+	    this.nodes = [];
+            return;
+        }
+        let brs = p.branches.map(function(br) {
+            return br;
+        });
+
+        brs.sort(function(a, b) {
+            if (a.name > b.name) return 1;
+            if (a.name < b.name) return -1;
+            return 0;
+        });
+
+        this.nodes = brs.map((br) => {
+            const chosen = kw != "" && (br.name.indexOf(kw) >= 0 || br.desc.indexOf(kw) >= 0);
+            return <Branch
+                       ownerChanged={this.handleOwnerUpdate}
+                       descChanged={this.handleDescUpdate}
+                       name={br.name}
+                       owner={br.owner}
+                       desc={br.desc}
+                       chosen={chosen}
+                       key={br.name} />;
+        });
     }
 
     handleOwnerUpdate: (b: string, o: string) => Promise<void> = (b: string, o: string) => {
@@ -33,35 +72,10 @@ export default class Project extends React.Component<Props, State> {
     };
 
     private renderBranches() {
-        const p = this.props.project;
-        if (p.branches.length === 0) {
-            return null;
-        }
-        let brs = p.branches.map(function(br) {
-            return br;
-        });
-
-        brs.sort(function(a, b) {
-            if (a.name > b.name) return 1;
-            if (a.name < b.name) return -1;
-            return 0;
-        });
-
-        let nodes = brs.map((br) => {
-            const k = this.props.keyword;
-            const chosen = this.props.keyword && (br.name.indexOf(k) >= 0 || br.desc.indexOf(k) >= 0);
-            return <Branch
-                ownerChanged={this.handleOwnerUpdate}
-                descChanged={this.handleDescUpdate}
-                name={br.name}
-                owner={br.owner}
-                desc={br.desc}
-                chosen={chosen}
-                key={br.name} />;
-        });
+	if (this.nodes.length < 1) return null;
         return (
             <div className={this.branchesClass}>
-                {nodes}
+                {this.nodes}
             </div>
         );
     }
@@ -73,11 +87,19 @@ export default class Project extends React.Component<Props, State> {
         this.setState({ expanded: false });
     }
 
+    private shouldExpand(props: Props): boolean {
+	if (props.keyword) {
+	    return this.nodes.reduce((b, n) => {
+		return b || n.props.chosen;
+	    }, false);
+	}
+	return this.state.expanded;
+    }
     private get chosen(): boolean {
         if (!this.props.keyword) return false;
         return this.props.project.name.indexOf(this.props.keyword) >= 0;
     }
-    private rootClass(nodes: Branch[]): string {
+    private rootClass(nodes: JSX.Element[]): string {
 	let ret = "proj";
 	let show = true;
 	if (this.props.keyword && !this.chosen) {
@@ -105,10 +127,8 @@ export default class Project extends React.Component<Props, State> {
 
     render() {
 	let nodes = this.renderBranches();
-	let children: Branch[] = [];
-	if (nodes !== null) children = nodes.props.children;
         return (
-            <div className={this.rootClass(children)}>
+            <div className={this.rootClass(this.nodes)}>
                 <div className={this.nameClass} onClick={this.toggleExpand}>{this.props.project.name}</div>
                 {nodes}
             </div>

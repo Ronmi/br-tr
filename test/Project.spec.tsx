@@ -91,6 +91,38 @@ describe("<Project />", () => {
         expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
     });
 
+    describe("searching", () => {
+	function w(kw: string) {
+	    let props = prop();
+	    props.keyword = kw;
+	    return shallow(<Project {...props} />);
+	}
+	it("adds .hidden to div.proj if name, branch name and branch desc do not matching keyword", () => {
+	    let wrapper = w("non-exist");
+	    expect(wrapper.is("div.hidden")).to.be.true;
+	});
+	it("expands when any branch matches to keyword", () => {
+	    let wrapper = w("b");
+	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
+	});
+	it("collapses if no branch matches", () => {
+	    let wrapper = w("repo");
+	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.true;
+	});
+	it("expends when clicking on collapsed project", () => {
+	    let wrapper = w("repo");
+	    wrapper.find("div.name").simulate("click", {});
+	    wrapper.update();
+	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
+	});
+	it("collapses when clicking on expanded project", () => {
+	    let wrapper = w("b");
+	    wrapper.find("div.name").simulate("click", {});
+	    wrapper.update();
+	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.true;
+	});
+    });
+
     describe("exported methods", () => {
         it("expands after calling expand()", () => {
             let wrapper = shallow(<Project {...prop() } />);
