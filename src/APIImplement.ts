@@ -35,7 +35,7 @@ export class ByFetch implements API {
         };
         let del: string[] = [];
 
-        let repos: { [name: string]: boolean };
+        let repos: { [name: string]: boolean } = {};
         for (let i = 0; i < p.length; i++) {
             repos[p[i].name] = true;
         }
