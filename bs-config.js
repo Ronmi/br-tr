@@ -12,13 +12,16 @@ module.exports = {
     },
   ],
   // Enable static server by default
-  "server": {
-    baseDir: "public",
-    routes: {
-      "/node_modules": "node_modules",
-    },
-  },
+  // "server": {
+  //   baseDir: "public",
+  //   routes: {
+  //     "/node_modules": "node_modules",
+  //   },
+  // },
   // If you are running a backend or mock API server, set it up here
-  // "proxy": "127.0.0.1:8000",
+  "proxy": "127.0.0.1:8000",
+  "serveStatic": [
+    "public"
+  ],
 
 };

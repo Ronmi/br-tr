@@ -56,58 +56,54 @@ export default class App extends React.Component<Props, State> {
 	this.setState({ projects: dest });
     };
     handleDescUpdate: (r: string, b: string, d: string) => Promise<void> = (repo: string, br: string, desc: string) => {
-        return new Promise<void>((s, j) => {
-            setTimeout(() => {
-		let dest = dupe(this.state.projects);
-		if (!dest[repo]) {
-		    j();
-		    return;
+	return new Promise<void>((s, j) => {
+	    let dest = dupe(this.state.projects);
+	    if (!dest[repo]) {
+		j();
+		return;
+	    }
+	    
+	    let found = false;
+	    for (let i = 0; i < dest[repo].branches.length; i++) {
+		const b = dest[repo].branches[i];
+		if (b.name == br) {
+		    dest[repo].branches[i].desc = desc;
+		    found = true;
+		    break;
 		}
-
-		let found = false;
-		for (let i = 0; i < dest[repo].branches.length; i++) {
-		    const b = dest[repo].branches[i];
-		    if (b.name == br) {
-			dest[repo].branches[i].desc = desc;
-			found = true;
-			break;
-		    }
-		}
-		if (!found) {
-		    j();
-		    return;
-		}
-		this.setState({ projects: dest });
-		s();
-	    }, 3000);
-        });
+	    }
+	    if (!found) {
+		j();
+		return;
+	    }
+	    this.setState({ projects: dest });
+	    this.props.API.updateDesc(repo, br, desc).then(s, j);
+	});
     };
     handleOwnerUpdate: (r: string, b: string, o: string) => Promise<void> = (repo: string, br: string, owner: string) => {
         return new Promise<void>((s, j) => {
-            setTimeout(() => {
-		let dest = dupe(this.state.projects);
-		if (!dest[repo]) {
-		    j();
-		    return;
+	    let dest = dupe(this.state.projects);
+	    if (!dest[repo]) {
+		j();
+		return;
+	    }
+	    
+	    let found = false;
+	    for (let i = 0; i < dest[repo].branches.length; i++) {
+		const b = dest[repo].branches[i];
+		if (b.name == br) {
+		    dest[repo].branches[i].owner = owner;
+		    found = true;
+		    break;
 		}
+	    }
+	    if (!found) {
+		j();
+		return;
+	    }
+	    this.setState({ projects: dest });
 
-		let found = false;
-		for (let i = 0; i < dest[repo].branches.length; i++) {
-		    const b = dest[repo].branches[i];
-		    if (b.name == br) {
-			dest[repo].branches[i].owner = owner;
-			found = true;
-			break;
-		    }
-		}
-		if (!found) {
-		    j();
-		    return;
-		}
-		this.setState({ projects: dest });
-		s();
-	    }, 3000);
-
+	    this.props.API.updateOwner(repo, br, owner).then(s, j);
         });
     };
     handleKeywordUpdate: (k: string) => void = (k: string) => {
