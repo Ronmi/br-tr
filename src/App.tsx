@@ -2,7 +2,7 @@ import * as React from "react";
 import { Project as P } from "./types";
 import Header from "./Header";
 import Project from "./Project";
-import { API, ChangeSet } from "./API";
+import { API, ChangeSet, User, Guest } from "./API";
 
 export interface Props {
     API: API;
@@ -11,6 +11,7 @@ export interface Props {
 export interface State {
     projects?: { [name: string]: P };
     keyword?: string;
+    me?: User;
 }
 
 type Ps = { [name: string]: P };
@@ -30,9 +31,11 @@ export default class App extends React.Component<Props, State> {
         this.state = {
             keyword: "",
             projects: {},
+	    me: Guest,
         };
 
 	this.props.API.onUpdate(this.mergeChangeset);
+	
     }
     private mergeChangeset: (c: ChangeSet) => void = (c: ChangeSet) => {
 	let dest = dupe(this.state.projects);
@@ -110,6 +113,13 @@ export default class App extends React.Component<Props, State> {
         this.setState({ keyword: k });
     };
 
+    componentDidMount() {
+	this.props.API.me().then((me) => {
+	    this.setState({ me: me });
+	}, () => {
+	    this.setState({ me: Guest });
+	});
+    }
     render() {
         let nodes: JSX.Element[] = [];
 	for (let n in this.state.projects) {
@@ -129,7 +139,7 @@ export default class App extends React.Component<Props, State> {
                 <Header
                     keywordChanged={this.handleKeywordUpdate}
                     name="Patrolavia"
-                    img="//www.gravatar.com/avatar/ed050764beb4cc337b2645c519d676fd?s=48" />
+                    img={this.state.me.avatar} />
                 <div className="projects">
                     {nodes}
                 </div>

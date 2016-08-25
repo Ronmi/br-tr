@@ -1,5 +1,5 @@
 import { Project } from "../src/types";
-import { API, ChangeSet, Callback } from "../src/API";
+import { API, ChangeSet, Callback, User, Guest } from "../src/API";
 
 export class ByMock implements API {
     private cbs: Callback[];
@@ -45,5 +45,10 @@ export class ByMock implements API {
     }
     onUpdate(cb: Callback): void {
         this.cbs.push(cb);
+    }
+    me(): Promise<User> {
+        return new Promise<User>((s, j) => {
+            s(Guest);
+        });
     }
 }

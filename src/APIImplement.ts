@@ -1,4 +1,4 @@
-import { API, ChangeSet, Callback } from "./API";
+import { API, ChangeSet, Callback, User } from "./API";
 import { Project } from "./types";
 
 // This class needs more abstraction to be tested. At this time, I'm too lazy to refactor it.
@@ -111,5 +111,15 @@ export class ByFetch implements API {
 
         // start periodical fetch after first cb registered
         this.setupInterval();
+    }
+    async me(): Promise<User> {
+        let resp = await fetch("/api/me", {
+            credentials: "same-origin",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        });
+        return resp.json();
     }
 }
