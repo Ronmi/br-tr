@@ -57,9 +57,11 @@ export class ByFetch implements API {
     async doFetch(): Promise<void> {
         let projects: Project[] = [];
         try {
-            let res = await fetch("/api/list");
+            let res = await fetch("/api/list", {
+                credentials: "same-origin",
+            });
             projects = await res.json() as Project[];
-        } catch (e) {}
+        } catch (e) { }
 
         // finally
         if (projects.length > 0) {
@@ -76,6 +78,7 @@ export class ByFetch implements API {
 
     async updateOwner(repo: string, branch: string, owner: string) {
         await fetch("/api/setOwner", {
+            credentials: "same-origin",
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -90,6 +93,7 @@ export class ByFetch implements API {
     }
     async updateDesc(repo: string, branch: string, desc: string) {
         await fetch("/api/setDesc", {
+            credentials: "same-origin",
             method: "POST",
             headers: {
                 "Accept": "application/json",
