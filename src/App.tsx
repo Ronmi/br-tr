@@ -25,6 +25,8 @@ function dupe(ps: Ps): Ps {
 }
 
 export default class App extends React.Component<Props, State> {
+    private loginURL: string;
+    
     constructor(props?: Props, context?: any) {
         super(props, context);
 
@@ -35,7 +37,7 @@ export default class App extends React.Component<Props, State> {
         };
 
 	this.props.API.onUpdate(this.mergeChangeset);
-	
+	this.loginURL = "/";
     }
     private mergeChangeset: (c: ChangeSet) => void = (c: ChangeSet) => {
 	let dest = dupe(this.state.projects);
@@ -113,12 +115,22 @@ export default class App extends React.Component<Props, State> {
         this.setState({ keyword: k });
     };
 
-    componentDidMount() {
-	this.props.API.me().then((me) => {
-	    this.setState({ me: me });
-	}, () => {
-	    this.setState({ me: Guest });
+    async setup() {
+	try {
+	    this.loginURL = await this.props.API.authURL();
+	} catch (e) {}
+
+	let me = Guest
+	try {
+	    me = await this.props.API.me();
+	} catch (e) {}
+
+	this.setState({
+	    me: me,
 	});
+    }
+    componentWillMount() {
+	this.setup();
     }
     render() {
         let nodes: JSX.Element[] = [];
@@ -139,7 +151,8 @@ export default class App extends React.Component<Props, State> {
                 <Header
                     keywordChanged={this.handleKeywordUpdate}
                     name="Patrolavia"
-                    img={this.state.me.avatar} />
+                    img={this.state.me.avatar}
+		    loginURL={this.loginURL} />
                 <div className="projects">
                     {nodes}
                 </div>
