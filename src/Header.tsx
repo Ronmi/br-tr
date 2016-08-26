@@ -5,6 +5,7 @@ export interface Props {
     keywordChanged: (k: string) => void;
     name: string;
     img: string;
+    loginURL: string;
 }
 
 export interface State {
@@ -38,7 +39,7 @@ export default class Header extends React.Component<Props, State> {
                     <DebouncedInput placeholder="Search" value={this.state.keyword} debounce={200} onChange={this.handleKeywordUpdate} />
                 </div>
                 <div className="user">
-                    <img src={this.props.img} />
+		    <a href={this.props.loginURL}><img src={this.props.img} /></a>
                 </div>
             </div>
         );
