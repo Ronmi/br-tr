@@ -40,7 +40,10 @@ describe("<Header />", () => {
     it("has a div.user", () => {
         expect(wrapper.find("div.user")).to.have.length(1);
     });
+    it("has a link to login in div.user", () => {
+        expect(wrapper.find("div.user a").prop("href")).to.equal("http://google.com");
+    });
     it("shows an image in div.user", () => {
-        expect(wrapper.find("div.user > img").prop("src")).to.equal("test_image");
+        expect(wrapper.find("div.user a > img").prop("src")).to.equal("test_image");
     });
 });
