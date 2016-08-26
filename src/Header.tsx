@@ -1,10 +1,11 @@
 import * as React from "react";
 import { DebouncedInput } from "./DebouncedInput";
+import { User } from "./API";
 
 export interface Props {
     keywordChanged: (k: string) => void;
     name: string;
-    img: string;
+    user: User;
     loginURL: string;
 }
 
@@ -39,7 +40,7 @@ export default class Header extends React.Component<Props, State> {
                     <DebouncedInput placeholder="Search" value={this.state.keyword} debounce={200} onChange={this.handleKeywordUpdate} />
                 </div>
                 <div className="user">
-		    <a href={this.props.loginURL}><img src={this.props.img} /></a>
+		    <a href={this.props.loginURL}><img src={this.props.user.avatar} title={this.props.user.name} /></a>
                 </div>
             </div>
         );

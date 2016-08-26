@@ -151,7 +151,7 @@ export default class App extends React.Component<Props, State> {
                 <Header
                     keywordChanged={this.handleKeywordUpdate}
                     name="Patrolavia"
-                    img={this.state.me.avatar}
+                    user={this.state.me}
                     loginURL={this.loginURL} />
                 <div className="projects">
                     {nodes}

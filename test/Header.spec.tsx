@@ -5,6 +5,7 @@
 
 import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
+import { Guest } from "../src/API";
 import Header, { Props } from "../src/Header";
 
 const expect = chai.expect;
@@ -13,7 +14,7 @@ function prop(): Props {
     return {
         keywordChanged: sinon.spy(),
         name: "test",
-        img: "test_image",
+	user: Guest,
 	loginURL: "http://google.com",
     };
 }
@@ -44,6 +45,6 @@ describe("<Header />", () => {
         expect(wrapper.find("div.user a").prop("href")).to.equal("http://google.com");
     });
     it("shows an image in div.user", () => {
-        expect(wrapper.find("div.user a > img").prop("src")).to.equal("test_image");
+        expect(wrapper.find("div.user a > img").prop("src")).to.equal(Guest.avatar);
     });
 });
