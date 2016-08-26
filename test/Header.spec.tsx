@@ -14,6 +14,7 @@ function prop(): Props {
         keywordChanged: sinon.spy(),
         name: "test",
         img: "test_image",
+	loginURL: "http://google.com",
     };
 }
 
