@@ -122,4 +122,14 @@ export class ByFetch implements API {
         });
         return resp.json();
     }
+    async authURL(): Promise<string> {
+        let resp = await fetch("/api/auth", {
+            credentials: "same-origin",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        });
+        return resp.json();
+    }
 }

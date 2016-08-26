@@ -27,4 +27,5 @@ export interface API {
     updateDesc(repo: string, branch: string, desc: string): Promise<void>;
     onUpdate(cb: Callback): void;
     me(): Promise<User>;
+    authURL(): Promise<string>;
 }
