@@ -4,7 +4,7 @@
 /// <reference path="../typings/globals/chai-as-promised/index.d.ts" />
 
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { shallow, ShallowWrapper, mount } from "enzyme";
 import { Branch as br } from "../src/types";
 import Project, { Props } from "../src/Project";
 
@@ -21,12 +21,17 @@ function brs(): br[] {
 
 function prop(n = "test/repo", b: br[] = brs()): Props {
     return {
-        ownerChanged: (repo: string, owner: string) => {
+        ownerChanged: (repo: string, br: string, owner: string) => {
             return new Promise<void>((s, j) => {
                 s();
             });
         },
-        descChanged: (repo: string, desc: string) => {
+        descChanged: (repo: string, br: string, desc: string) => {
+            return new Promise<void>((s, j) => {
+                s();
+            });
+        },
+        branchCreated: (repo: string, br: string, desc: string) => {
             return new Promise<void>((s, j) => {
                 s();
             });
@@ -44,11 +49,11 @@ describe("<Project />", () => {
         expect(wrapper.is("div.proj")).to.be.true;
         expect(wrapper.hasClass("mine")).to.be.false;
     });
-    it("adds .mine to .name if keyword matches some part of repository name", () => {
+    it("adds .mine to .title if keyword matches some part of repository name", () => {
         let props = prop();
         props.keyword = "test";
         let wrapper = shallow(<Project {...props} />);
-        expect(wrapper.find(".name").hasClass("mine")).to.be.true;
+        expect(wrapper.find(".title").hasClass("mine")).to.be.true;
     });
     it("has .mine on branches if keyword matches some part of branch name or description", () => {
         let props = prop();
@@ -71,10 +76,10 @@ describe("<Project />", () => {
         expect(wrapper.find(".name")).to.have.length(1);
         expect(wrapper.find(".name").text()).to.equal("test/repo");
     });
-    it("has an plus image in .name", () => {
+    it("has an plus image in .title", () => {
         let wrapper = shallow(<Project {...prop("test/repo", []) } />);
-        expect(wrapper.find(".name img")).to.have.length(1);
-        expect(wrapper.find(".name img").prop("src")).to.equal("img/plus.svg");
+        expect(wrapper.find(".title img")).to.have.length(1);
+        expect(wrapper.find(".title img").prop("src")).to.equal("img/plus.svg");
     })
     it("does not contain div or Branch element if branch info not exists", () => {
         let wrapper = shallow(<Project {...prop("test/repo", []) } />);
@@ -90,10 +95,15 @@ describe("<Project />", () => {
         let wrapper = shallow(<Project {...prop() } />);
         expect(wrapper.find("div.branches.hidden")).to.have.length(1);
     });
-    it("removes .hidden from div.branches if it is expanded (toggoles by clicking on name)", () => {
+    it("removes .hidden from div.branches if it is expanded (toggles by clicking on .title)", () => {
         let wrapper = shallow(<Project {...prop() } />);
-        wrapper.find(".proj > .name").simulate("click", {});
+        wrapper.find(".proj > .title").simulate("click", {});
         expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
+    });
+    it("does not trigger expanding by clicking on .plus", () => {
+        let wrapper = mount(<Project {...prop() } />);
+        wrapper.find(".proj .plus").simulate("click");
+        expect(wrapper.find("div.branches").hasClass("hidden")).to.be.true;
     });
 
     describe("searching", () => {
@@ -116,13 +126,13 @@ describe("<Project />", () => {
 	});
 	it("expends when clicking on collapsed project", () => {
 	    let wrapper = w("repo");
-	    wrapper.find("div.name").simulate("click", {});
+	    wrapper.find("div.title").simulate("click", {});
 	    wrapper.update();
 	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.false;
 	});
 	it("collapses when clicking on expanded project", () => {
 	    let wrapper = w("b");
-	    wrapper.find("div.name").simulate("click", {});
+	    wrapper.find("div.title").simulate("click", {});
 	    wrapper.update();
 	    expect(wrapper.find("div.branches").hasClass("hidden")).to.be.true;
 	});
@@ -137,7 +147,7 @@ describe("<Project />", () => {
         });
         it("collapses after calling collapse()", () => {
             let wrapper = shallow(<Project {...prop() } />);
-            wrapper.find(".proj > .name").simulate("click", {});
+            wrapper.find(".proj > .title").simulate("click", {});
             (wrapper.instance() as Project).collapse();
             wrapper.update();
             expect(wrapper.find("div.branches").hasClass("hidden")).to.be.true;

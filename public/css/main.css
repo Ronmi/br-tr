@@ -113,7 +113,7 @@ body {
     display: none;
 }
 
-.proj>.name {
+.proj>.title {
     height: 2em;
     font-size: x-large;
     cursor: pointer;
@@ -121,16 +121,43 @@ body {
     clear: both;
 }
 
-.proj>.name span {
+.proj>.title>.name {
     padding: 10px 17px;
     float: left;
 }
 
-.proj>.name .plus {
+.proj>.title .plus {
     height: 1em;
+    width: 1em;
     padding: 0.5em;
     float: right;
     cursor: pointer;
+}
+
+.proj>.title .prompt {
+    background-color: white;
+    left: -30em;
+    width: 31em;
+    htight: 2em;
+    position: relative;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    font-size: medium;
+    clear: both;
+}
+
+.proj>.title .prompt input {
+    width: 12.5em;
+}
+.proj>.title .prompt .state {
+    width: 1em;
+}
+.proj>.title .prompt button {
+    width: 4em;
+}
+
+.proj>.title .prompt.hidden {
+    display: none;
 }
 
 .branches {

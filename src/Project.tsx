@@ -1,24 +1,31 @@
 import * as React from "react";
 import { Project as proj, Branch as br } from "./types";
+import { Visualizer, DefaultProvider as provider } from "react-promise-visualizer";
 import Branch from "./Branch";
 
 export interface Props {
     ownerChanged: (repo: string, br: string, owner: string) => Promise<void>;
     descChanged: (repo: string, br: string, desc: string) => Promise<void>;
+    branchCreated: (repo: string, br: string, desc: string) => Promise<void>;
     project: proj;
     keyword?: string;
 }
 
 export interface State {
     expanded?: boolean;
+    asking?: boolean; // asking for branch name?
 }
 
 export default class Project extends React.Component<Props, State> {
+    private branchInput: HTMLInputElement;
+    private descInput: HTMLInputElement;
+    private v_branch: Visualizer;
     constructor(props?: Props, context?: any) {
         super(props, context);
 
         this.state = {
             expanded: false,
+            asking: false,
         };
 
         this.setupNodes(this.props);
@@ -67,8 +74,22 @@ export default class Project extends React.Component<Props, State> {
     handleDescUpdate: (b: string, o: string) => Promise<void> = (b: string, o: string) => {
         return this.props.descChanged(this.props.project.name, b, o);
     };
-    toggleExpand: () => void = () => {
+    toggleExpand: (e: any) => void = (e: any) => {
         this.setState({ expanded: !this.state.expanded });
+    };
+    noPropagate: (e: Event) => void = (e: Event) => {
+	e.stopPropagation();
+    };
+    togglePrompt: (e: Event) => void = (e: Event) => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.setState({ asking: !this.state.asking });
+    };
+    handleCreate: (e: Event) => void = (e: Event) => {
+	e.preventDefault();
+	this.props.branchCreated(this.props.project.name, this.branchInput.value, this.descInput.value).then(() => {
+	    this.setState({ asking: false });
+	},function(){});
     };
 
     private renderBranches() {
@@ -114,8 +135,8 @@ export default class Project extends React.Component<Props, State> {
         if (!show) ret += " hidden";
         return ret;
     }
-    private get nameClass(): string {
-        let ret = "name";
+    private get titleClass(): string {
+        let ret = "title";
         if (this.chosen) ret += " mine";
         return ret;
     }
@@ -124,14 +145,29 @@ export default class Project extends React.Component<Props, State> {
         if (!this.state.expanded) ret += " hidden";
         return ret;
     }
+    private get promptClass(): string {
+        let ret = "prompt";
+        if (!this.state.asking) ret += " hidden";
+        return ret;
+    }
 
     render() {
         let nodes = this.renderBranches();
         return (
             <div className={this.rootClass(this.nodes)}>
-                <div className={this.nameClass} onClick={this.toggleExpand}>
-                    <span>{this.props.project.name}</span>
-                    <div className="plus"><img style={{ height: 'inherit' }} src="img/plus.svg" /></div>
+                <div className={this.titleClass} onClick={this.toggleExpand}>
+                    <span className="name">{this.props.project.name}</span>
+                    <div className="plus" onClick={this.noPropagate}>
+                        <img style={{ height: 'inherit' }} src="img/plus.svg" onClick={this.togglePrompt} />
+                        <div className={this.promptClass}>
+			    <form onSubmit={this.handleCreate}>
+                                <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
+                                <input type="text" placeholder="description" ref={c => this.descInput = c} />
+				<Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
+                                <button type="submit">Create</button>
+			    </form>
+                        </div>
+                    </div>
                 </div>
                 {nodes}
             </div>
