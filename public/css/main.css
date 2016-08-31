@@ -10,6 +10,7 @@ body {
     -o-transition: all 1s;
     margin: 0 !important;
     padding: 0 !important;
+    overflow: hidden;
 }
 
 .hidden * {
@@ -112,11 +113,24 @@ body {
     display: none;
 }
 
-.proj>.name{
-    padding: 10px 17px;
+.proj>.name {
+    height: 2em;
     font-size: x-large;
     cursor: pointer;
     border-bottom: 1px solid #cccccc;
+    clear: both;
+}
+
+.proj>.name span {
+    padding: 10px 17px;
+    float: left;
+}
+
+.proj>.name .plus {
+    height: 1em;
+    padding: 0.5em;
+    float: right;
+    cursor: pointer;
 }
 
 .branches {

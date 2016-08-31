@@ -71,6 +71,11 @@ describe("<Project />", () => {
         expect(wrapper.find(".name")).to.have.length(1);
         expect(wrapper.find(".name").text()).to.equal("test/repo");
     });
+    it("has an plus image in .name", () => {
+        let wrapper = shallow(<Project {...prop("test/repo", []) } />);
+        expect(wrapper.find(".name img")).to.have.length(1);
+        expect(wrapper.find(".name img").prop("src")).to.equal("img/plus.svg");
+    })
     it("does not contain div or Branch element if branch info not exists", () => {
         let wrapper = shallow(<Project {...prop("test/repo", []) } />);
         expect(wrapper.find("branches")).to.have.length(0);
