@@ -69,4 +69,13 @@ export class ByMock implements API {
             j();
         });
     }
+    addBranch(repo: string, branch: string, desc: string): Promise<void> {
+        return new Promise<void>((res, rej) => {
+            if (this.shouldSuccess) {
+                res();
+                return;
+            }
+            rej();
+        });
+    }
 }

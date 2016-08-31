@@ -132,4 +132,20 @@ export class ByFetch implements API {
         });
         return resp.json();
     }
+    async addBranch(repo: string, branch: string, desc: string) {
+        await fetch("/api/addBranch", {
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                repo: repo,
+                branch: branch,
+                desc: desc,
+            }),
+        });
+    }
+
 }
