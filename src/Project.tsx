@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Project as proj, Branch as br } from "./types";
-import { Visualizer, DefaultProvider as provider } from "react-promise-visualizer";
+import AddBranchBox from "./AddBranchBox";
 import Branch from "./Branch";
 
 export interface Props {
@@ -13,20 +13,15 @@ export interface Props {
 
 export interface State {
     expanded?: boolean;
-    asking?: boolean; // asking for branch name?
 }
 
 export default class Project extends React.Component<Props, State> {
-    private branchInput: HTMLInputElement;
-    private refInput: HTMLInputElement;
-    private descInput: HTMLInputElement;
-    private v_branch: Visualizer;
+    private box: AddBranchBox;
     constructor(props?: Props, context?: any) {
         super(props, context);
 
         this.state = {
             expanded: false,
-            asking: false,
         };
 
         this.setupNodes(this.props);
@@ -83,19 +78,11 @@ export default class Project extends React.Component<Props, State> {
     };
     togglePrompt: (e: Event) => void = (e: Event) => {
         e.stopPropagation();
-        e.preventDefault();
-        this.setState({ asking: !this.state.asking });
+	this.box.toggle();
     };
-    handleCreate: (e: Event) => void = (e: Event) => {
-        e.stopPropagation();
-        e.preventDefault();
+    handleCreate: (b: string, r: string, d: string) => Promise<void> = (br: string, ref: string, desc: string) => {
 	const name = this.props.project.name;
-	const br = this.branchInput.value;
-	const ref = this.refInput.value;
-	const desc = this.descInput.value;
-        this.v_branch.show(this.props.branchCreated(name, br, ref, desc)).then(() => {
-            this.setState({ asking: false });
-        }, function(){});
+        return this.props.branchCreated(name, br, ref, desc);
     };
 
     private renderBranches() {
@@ -151,11 +138,6 @@ export default class Project extends React.Component<Props, State> {
         if (!this.state.expanded) ret += " hidden";
         return ret;
     }
-    private get promptClass(): string {
-        let ret = "prompt";
-        if (!this.state.asking) ret += " hidden";
-        return ret;
-    }
 
     render() {
         let nodes = this.renderBranches();
@@ -165,15 +147,7 @@ export default class Project extends React.Component<Props, State> {
                     <span className="name">{this.props.project.name}</span>
                     <div className="plus" onClick={this.noPropagate}>
                         <img style={{ height: 'inherit' }} src="img/plus.svg" onClick={this.togglePrompt} />
-                        <div className={this.promptClass}>
-                            <form onSubmit={this.handleCreate}>
-                                <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
-                                <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
-                                <input type="text" placeholder="description" ref={c => this.descInput = c} />
-                                <button type="submit">Create</button>
-                                <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
-                            </form>
-                        </div>
+			<AddBranchBox branchCreated={this.handleCreate} ref={c => this.box = c} />
                     </div>
                 </div>
                 {nodes}
