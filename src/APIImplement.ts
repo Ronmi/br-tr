@@ -1,6 +1,34 @@
 import { API, ChangeSet, Callback, User } from "./API";
 import { Project } from "./types";
 
+function wrap(path: string, opt: any): Promise<void> {
+    return new Promise<void>((res, rej) => {
+        fetch(path, opt).then(
+            (resp) => {
+                if (resp.status < 200 || resp.status >= 300) {
+                    rej();
+                    return;
+                }
+                res();
+            },
+            () => { rej(); }
+        );
+    });
+}
+function wrapJSON<T>(path: string, opt: any): Promise<T> {
+    return new Promise<T>((res, rej) => {
+        fetch(path, opt).then(
+            (resp) => {
+                if (resp.status < 200 && resp.status >= 300) {
+                    rej();
+                }
+                return resp.json();
+            },
+            () => { rej(); }
+        ).then(res, rej);
+    });
+}
+
 // This class needs more abstraction to be tested. At this time, I'm too lazy to refactor it.
 export class ByFetch implements API {
     private duration: number; // fetch update every "duration" seconds
@@ -76,8 +104,8 @@ export class ByFetch implements API {
         this.fetching = false;
     }
 
-    async updateOwner(repo: string, branch: string, owner: string) {
-        await fetch("/api/setOwner", {
+    updateOwner(repo: string, branch: string, owner: string): Promise<void> {
+        return wrap("/api/setOwner", {
             credentials: "same-origin",
             method: "POST",
             headers: {
@@ -91,8 +119,8 @@ export class ByFetch implements API {
             }),
         });
     }
-    async updateDesc(repo: string, branch: string, desc: string) {
-        await fetch("/api/setDesc", {
+    updateDesc(repo: string, branch: string, desc: string): Promise<void> {
+        return wrap("/api/setDesc", {
             credentials: "same-origin",
             method: "POST",
             headers: {
@@ -112,28 +140,26 @@ export class ByFetch implements API {
         // start periodical fetch after first cb registered
         this.setupInterval();
     }
-    async me(): Promise<User> {
-        let resp = await fetch("/api/me", {
+    me(): Promise<User> {
+        return wrapJSON<User>("/api/me", {
             credentials: "same-origin",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             },
         });
-        return resp.json();
     }
-    async authURL(): Promise<string> {
-        let resp = await fetch("/api/auth", {
+    authURL(): Promise<string> {
+        return wrapJSON("/api/auth", {
             credentials: "same-origin",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             },
         });
-        return resp.json();
     }
-    async addBranch(repo: string, branch: string, desc: string) {
-        await fetch("/api/addBranch", {
+    addBranch(repo: string, branch: string, desc: string): Promise<void> {
+        return wrap("/api/addBranch", {
             credentials: "same-origin",
             method: "POST",
             headers: {
@@ -147,5 +173,4 @@ export class ByFetch implements API {
             }),
         });
     }
-
 }

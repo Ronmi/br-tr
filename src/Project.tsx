@@ -160,12 +160,12 @@ export default class Project extends React.Component<Props, State> {
                     <div className="plus" onClick={this.noPropagate}>
                         <img style={{ height: 'inherit' }} src="img/plus.svg" onClick={this.togglePrompt} />
                         <div className={this.promptClass}>
-			    <form onSubmit={this.handleCreate}>
+                            <form onSubmit={this.handleCreate}>
                                 <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
                                 <input type="text" placeholder="description" ref={c => this.descInput = c} />
-				<Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
+                                <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
                                 <button type="submit">Create</button>
-			    </form>
+                            </form>
                         </div>
                     </div>
                 </div>
