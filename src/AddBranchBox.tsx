@@ -48,20 +48,18 @@ export default class AddBranchBox extends React.Component<Props, State> {
 	    this.branchInput.focus();
     }
     render() {
-	if (this.state.show) {
-            return (
-                <div className="prompt">
-                    <form onSubmit={this.handleCreate}>
-                        <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
-                        <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
-                        <input type="text" placeholder="description" ref={c => this.descInput = c} />
-                        <button type="submit">Create</button>
-                        <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
-                    </form>
-                </div>
-            );
+	let cls = "prompt";
+	if (!this.state.show) {
+	    cls += " hidden";
 	}
-
-	return null;
+        return (
+            <form className={cls} onSubmit={this.handleCreate}>
+                <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
+                <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
+                <input type="text" placeholder="description" ref={c => this.descInput = c} />
+                <button type="submit">Create</button>
+                <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
+            </form>
+        );
     }
 }
