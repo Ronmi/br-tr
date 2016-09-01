@@ -78,7 +78,7 @@ export default class Project extends React.Component<Props, State> {
         this.setState({ expanded: !this.state.expanded });
     };
     noPropagate: (e: Event) => void = (e: Event) => {
-	e.stopPropagation();
+        e.stopPropagation();
     };
     togglePrompt: (e: Event) => void = (e: Event) => {
         e.stopPropagation();
@@ -86,10 +86,14 @@ export default class Project extends React.Component<Props, State> {
         this.setState({ asking: !this.state.asking });
     };
     handleCreate: (e: Event) => void = (e: Event) => {
-	e.preventDefault();
-	this.props.branchCreated(this.props.project.name, this.branchInput.value, this.descInput.value).then(() => {
-	    this.setState({ asking: false });
-	},function(){});
+        e.stopPropagation();
+        e.preventDefault();
+	const name = this.props.project.name;
+	const br = this.branchInput.value;
+	const desc = this.descInput.value;
+        this.v_branch.show(this.props.branchCreated(name, br, desc)).then(() => {
+            this.setState({ asking: false });
+        }, function(){});
     };
 
     private renderBranches() {

@@ -115,7 +115,7 @@ export default class App extends React.Component<Props, State> {
         this.setState({ keyword: k });
     };
     handleBranchCreate: (r: string, b: string, d: string) => Promise<void> = (repo: string, br: string, desc: string) => {
-        return this.props.API.addBranch(repo, br, desc)
+        return this.props.API.addBranch(repo, br, desc);
     };
 
     async setup() {
@@ -143,7 +143,7 @@ export default class App extends React.Component<Props, State> {
                 <Project
                     ownerChanged={this.handleOwnerUpdate}
                     descChanged={this.handleDescUpdate}
-		    branchCreated={this.handleBranchCreate}
+                    branchCreated={this.handleBranchCreate}
                     project={p}
                     keyword={this.state.keyword}
                     key={p.name} />
