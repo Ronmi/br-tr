@@ -136,24 +136,27 @@ body {
 
 .proj>.title .prompt {
     background-color: white;
-    left: -30em;
-    width: 31em;
-    htight: 2em;
+    left: -13.5em;
+    width: 14em;
     position: relative;
     border: 1px solid #cccccc;
     padding: 5px;
     font-size: medium;
     clear: both;
+    box-shadow: 0px 1px 5px rgba(148, 148, 148, 30);
 }
 
 .proj>.title .prompt input {
-    width: 12.5em;
+    width: 13.5em;
+    margin: 2px 0;
 }
 .proj>.title .prompt .state {
     width: 1em;
+    margin: 2px;
 }
 .proj>.title .prompt button {
     width: 4em;
+    margin: 2px 0;
 }
 
 .proj>.title .prompt.hidden {

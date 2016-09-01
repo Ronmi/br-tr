@@ -170,8 +170,8 @@ export default class Project extends React.Component<Props, State> {
                                 <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
                                 <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
                                 <input type="text" placeholder="description" ref={c => this.descInput = c} />
-                                <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
                                 <button type="submit">Create</button>
+                                <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
                             </form>
                         </div>
                     </div>
