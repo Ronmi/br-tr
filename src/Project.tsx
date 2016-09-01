@@ -6,7 +6,7 @@ import Branch from "./Branch";
 export interface Props {
     ownerChanged: (repo: string, br: string, owner: string) => Promise<void>;
     descChanged: (repo: string, br: string, desc: string) => Promise<void>;
-    branchCreated: (repo: string, br: string, desc: string) => Promise<void>;
+    branchCreated: (repo: string, br: string, ref: string, desc: string) => Promise<void>;
     project: proj;
     keyword?: string;
 }
@@ -18,6 +18,7 @@ export interface State {
 
 export default class Project extends React.Component<Props, State> {
     private branchInput: HTMLInputElement;
+    private refInput: HTMLInputElement;
     private descInput: HTMLInputElement;
     private v_branch: Visualizer;
     constructor(props?: Props, context?: any) {
@@ -90,8 +91,9 @@ export default class Project extends React.Component<Props, State> {
         e.preventDefault();
 	const name = this.props.project.name;
 	const br = this.branchInput.value;
+	const ref = this.refInput.value;
 	const desc = this.descInput.value;
-        this.v_branch.show(this.props.branchCreated(name, br, desc)).then(() => {
+        this.v_branch.show(this.props.branchCreated(name, br, ref, desc)).then(() => {
             this.setState({ asking: false });
         }, function(){});
     };
@@ -166,6 +168,7 @@ export default class Project extends React.Component<Props, State> {
                         <div className={this.promptClass}>
                             <form onSubmit={this.handleCreate}>
                                 <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
+                                <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
                                 <input type="text" placeholder="description" ref={c => this.descInput = c} />
                                 <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
                                 <button type="submit">Create</button>

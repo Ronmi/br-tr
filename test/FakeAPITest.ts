@@ -51,11 +51,11 @@ describe("Mocked APIs", () => {
     it("should success for addBranch if it.should.success", () => {
         let api = new ByMock;
         api.should.success;
-        expect(api.addBranch("", "", "")).to.be.fulfilled;
+        expect(api.addBranch("", "", "", "")).to.be.fulfilled;
     });
     it("should fail for addBranch if it.should.fail", () => {
         let api = new ByMock;
         api.should.fail;
-        expect(api.addBranch("", "", "")).to.be.rejected;
+        expect(api.addBranch("", "", "", "")).to.be.rejected;
     });
 });

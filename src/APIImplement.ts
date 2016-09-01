@@ -158,7 +158,7 @@ export class ByFetch implements API {
             },
         });
     }
-    addBranch(repo: string, branch: string, desc: string): Promise<void> {
+    addBranch(repo: string, branch: string, ref: string, desc: string): Promise<void> {
         return wrap("/api/addBranch", {
             credentials: "same-origin",
             method: "POST",
@@ -170,6 +170,7 @@ export class ByFetch implements API {
                 repo: repo,
                 branch: branch,
                 desc: desc,
+                ref: ref,
             }),
         });
     }

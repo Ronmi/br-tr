@@ -28,5 +28,5 @@ export interface API {
     onUpdate(cb: Callback): void;
     me(): Promise<User>;
     authURL(): Promise<string>;
-    addBranch(repo: string, branch: string, desc: string): Promise<void>;
+    addBranch(repo: string, branch: string, ref: string, desc: string): Promise<void>;
 }

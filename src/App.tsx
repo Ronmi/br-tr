@@ -114,8 +114,8 @@ export default class App extends React.Component<Props, State> {
     handleKeywordUpdate: (k: string) => void = (k: string) => {
         this.setState({ keyword: k });
     };
-    handleBranchCreate: (r: string, b: string, d: string) => Promise<void> = (repo: string, br: string, desc: string) => {
-        return this.props.API.addBranch(repo, br, desc);
+    handleBranchCreate: (r: string, b: string, f: string, d: string) => Promise<void> = (repo: string, br: string, ref: string, desc: string) => {
+        return this.props.API.addBranch(repo, br, ref, desc);
     };
 
     async setup() {
