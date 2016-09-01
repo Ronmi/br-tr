@@ -6,7 +6,7 @@ function wrap(path: string, opt: any): Promise<void> {
         fetch(path, opt).then(
             (resp) => {
                 if (resp.status < 200 || resp.status >= 300) {
-                    rej();
+                    rej(resp.status);
                     return;
                 }
                 res();
@@ -20,7 +20,7 @@ function wrapJSON<T>(path: string, opt: any): Promise<T> {
         fetch(path, opt).then(
             (resp) => {
                 if (resp.status < 200 && resp.status >= 300) {
-                    rej();
+                    rej(resp.status);
                 }
                 return resp.json();
             },
