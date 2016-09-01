@@ -148,15 +148,25 @@ body {
 
 .proj>.title .prompt input {
     width: 13.5em;
+    border: 0;
+    border-bottom: 1px solid #cccccc;
     margin: 2px 0;
+    padding: 2px;
 }
 .proj>.title .prompt .state {
-    width: 1em;
-    margin: 2px;
+    width: 1.3em;
+    height: 1.3em;
+    margin: 2px 10px;
 }
 .proj>.title .prompt button {
-    width: 4em;
+    height: 2em;
     margin: 2px 0;
+    border: 1px solid #455ede;
+    background-color: #455ede;
+    border-radius: 5px;
+    color: #f6f6f6;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .proj>.title .prompt.hidden {
