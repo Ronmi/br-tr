@@ -58,11 +58,21 @@ export default class Branch extends React.Component<Props, State> {
         return (
             <div className={this.className}>
                 <span className="name">{this.props.name}</span>
-                <DebouncedInput className="owner" value={this.state.owner} onChange={this.handleOwnerUpdate} debounce={500} />
+                <DebouncedInput
+		    className="owner"
+		    value={this.state.owner}
+		    placeholder="username"
+		    onChange={this.handleOwnerUpdate}
+		    debounce={500} />
                 <div className="state">
                     <Visualizer className="state" provider={new provider} ref={c => this.v_owner = c} />
                 </div>
-                <DebouncedInput className="desc" value={this.state.desc} onChange={this.handleDescUpdate} debounce={500} />
+                <DebouncedInput
+		    className="desc"
+		    value={this.state.desc}
+		    placeholder="description"
+		    onChange={this.handleDescUpdate}
+		    debounce={500} />
                 <div className="state">
                     <Visualizer className="state" provider={new provider} ref={c => this.v_desc = c} />
                 </div>
