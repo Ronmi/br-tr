@@ -28,9 +28,7 @@ export default class AddBranchBox extends React.Component<Props, State> {
     toggle() {
 	this.setShow(!this.state.show);
     }
-    private need_focus: boolean;
     setShow(show: boolean) {
-	if (show) this.need_focus = true;
 	this.setState({ show: show });
     }
     
@@ -45,10 +43,12 @@ export default class AddBranchBox extends React.Component<Props, State> {
         }, function(){});
     };
 
+    shouldComponentUpdate(p: Props, s: State) {
+	return s.show != this.state.show;
+    }
     componentDidUpdate() {
-	if (this.state.show && this.branchInput && this.need_focus) {
+	if (this.state.show && this.branchInput) {
 	    this.branchInput.focus();
-	    this.need_focus = false;
 	}
     }
     render() {
