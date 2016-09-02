@@ -25,13 +25,15 @@ export default class AddBranchBox extends React.Component<Props, State> {
 
     }
 
-    toggle() {
-	this.setShow(!this.state.show);
-    }
     setShow(show: boolean) {
 	this.setState({ show: show });
     }
-    
+    toggle: () => void = () => {
+	this.setShow(!this.state.show);
+    }
+    noPropagate: (e: Event) => void = (e: Event) => {
+        e.stopPropagation();
+    };
     handleCreate: (e: Event) => void = (e: Event) => {
         e.stopPropagation();
         e.preventDefault();
@@ -57,13 +59,16 @@ export default class AddBranchBox extends React.Component<Props, State> {
 	    cls += " hidden";
 	}
         return (
-            <form className={cls} onSubmit={this.handleCreate}>
-                <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
-                <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
-                <input type="text" placeholder="description" ref={c => this.descInput = c} />
-                <button type="submit">Create</button>
-                <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
-            </form>
+            <div className="plus" onClick={this.noPropagate}>
+                <img style={{ height: 'inherit' }} src="img/plus.svg" onClick={this.toggle} />
+		<form className={cls} onSubmit={this.handleCreate}>
+                    <input type="text" placeholder="new_branch" ref={c => this.branchInput = c} />
+                    <input type="text" defaultValue="master" placeholder="from_branch" ref={c => this.refInput = c} />
+                    <input type="text" placeholder="description" ref={c => this.descInput = c} />
+                    <button type="submit">Create</button>
+                    <Visualizer className="state" provider={new provider} ref={c => this.v_branch = c} />
+		</form>
+            </div>
         );
     }
 }

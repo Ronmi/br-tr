@@ -73,13 +73,6 @@ export default class Project extends React.Component<Props, State> {
     toggleExpand: (e: any) => void = (e: any) => {
         this.setState({ expanded: !this.state.expanded });
     };
-    noPropagate: (e: Event) => void = (e: Event) => {
-        e.stopPropagation();
-    };
-    togglePrompt: (e: Event) => void = (e: Event) => {
-        e.stopPropagation();
-	this.box.toggle();
-    };
     handleCreate: (b: string, r: string, d: string) => Promise<void> = (br: string, ref: string, desc: string) => {
 	const name = this.props.project.name;
         return this.props.branchCreated(name, br, ref, desc);
@@ -145,10 +138,7 @@ export default class Project extends React.Component<Props, State> {
             <div className={this.rootClass(this.nodes)}>
                 <div className={this.titleClass} onClick={this.toggleExpand}>
                     <span className="name">{this.props.project.name}</span>
-                    <div className="plus" onClick={this.noPropagate}>
-                        <img style={{ height: 'inherit' }} src="img/plus.svg" onClick={this.togglePrompt} />
-			<AddBranchBox branchCreated={this.handleCreate} ref={c => this.box = c} />
-                    </div>
+		    <AddBranchBox branchCreated={this.handleCreate} ref={c => this.box = c} />
                 </div>
                 {nodes}
             </div>

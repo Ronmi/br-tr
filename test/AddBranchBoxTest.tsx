@@ -11,22 +11,32 @@ const expect = chai.expect;
 
 describe("<AddBranchBox />", () => {
     let wrapper = shallow(<AddBranchBox branchCreated={async ()=>{}} />);
-    it("is a form", () => {
-	expect(wrapper.is("form")).to.be.true;
+    it("is a div.plus", () => {
+	expect(wrapper.is("div.plus")).to.be.true;
     });
-    it("has three text inputs", () => {
-	expect(wrapper.find('input[type="text"]')).to.have.length(3);
+    it("has an image of img/plus.svg", () => {
+	expect(wrapper.find("img")).to.have.length(1);
+	expect(wrapper.find("img").prop("src")).to.equal("img/plus.svg");
     });
-    it("has a submit button", () => {
-	expect(wrapper.find('[type="submit"]')).to.have.length(1);
+    it("has a form", () => {
+	expect(wrapper.find("form")).to.have.length(1);
     });
-    it("has a promise visualizer", () => {
-	expect(wrapper.find("Visualizer")).to.have.length(1);
-    });
-    it("calls props.branchCreated when submitting the form", () => {
-	let spy = sinon.spy(async () => {});
-	let wrapper = mount(<AddBranchBox branchCreated={spy} />);
-	wrapper.find("form").simulate("submit");
-	expect(spy).to.be.calledOnce;
+
+    describe("form", () => {
+	it("has three text inputs", () => {
+	    expect(wrapper.find('form input[type="text"]')).to.have.length(3);
+	});
+	it("has a submit button", () => {
+	    expect(wrapper.find('form [type="submit"]')).to.have.length(1);
+	});
+	it("has a promise visualizer", () => {
+	    expect(wrapper.find("form Visualizer")).to.have.length(1);
+	});
+	it("calls props.branchCreated when submitting the form", () => {
+	    let spy = sinon.spy(async () => {});
+	    let wrapper = mount(<AddBranchBox branchCreated={spy} />);
+	    wrapper.find("form").simulate("submit");
+	    expect(spy).to.be.calledOnce;
+	});
     });
 });

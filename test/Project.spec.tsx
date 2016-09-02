@@ -76,10 +76,9 @@ describe("<Project />", () => {
         expect(wrapper.find(".name")).to.have.length(1);
         expect(wrapper.find(".name").text()).to.equal("test/repo");
     });
-    it("has an plus image in .title", () => {
+    it("has an AddBranchBox in .title", () => {
         let wrapper = shallow(<Project {...prop("test/repo", []) } />);
-        expect(wrapper.find(".title img")).to.have.length(1);
-        expect(wrapper.find(".title img").prop("src")).to.equal("img/plus.svg");
+        expect(wrapper.find(".title AddBranchBox")).to.have.length(1);
     })
     it("does not contain div or Branch element if branch info not exists", () => {
         let wrapper = shallow(<Project {...prop("test/repo", []) } />);
