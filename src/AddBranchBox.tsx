@@ -30,7 +30,10 @@ export default class AddBranchBox extends React.Component<Props, State> {
     }
     toggle: () => void = () => {
 	this.setShow(!this.state.show);
-    }
+    };
+    close: () => void = () => {
+	this.setShow(false);
+    };
     noPropagate: (e: Event) => void = (e: Event) => {
         e.stopPropagation();
     };
@@ -45,6 +48,16 @@ export default class AddBranchBox extends React.Component<Props, State> {
         }, function(){});
     };
 
+    componentDidMount() {
+	if (window) {
+	    window.addEventListener("click", this.close, false)
+	}
+    }
+    componentWillUnmount() {
+	if (window) {
+	    window.removeEventListener("click", this.close, false)
+	}
+    }
     shouldComponentUpdate(p: Props, s: State) {
 	return s.show != this.state.show;
     }
